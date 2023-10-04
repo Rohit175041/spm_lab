@@ -1,73 +1,54 @@
-// Implement cost-benefit analysis using any programming language
-
 #include <bits/stdc++.h>
 using namespace std;
 
-using namespace std;
-// calculating the net present value
-class project
+float NPVCalculator(int years, int costs[], int benefits[], int discountRate[])
 {
-public:
-    double calculateNPV(double initialInvestment, double annualBenefits[], int projectDuration, double discountRate[])
+    float npv = 0.0;
+
+    for (int i = 0; i < years; i++)
     {
-        double npv = -initialInvestment;
-        cout << setw(10) << "Year" << setw(20) << " Cash Flow" << setw(25) << "Discount Factor" << setw(35) << "Discounted Cash Flow" << endl;
-        cout << setw(10) << "0" << setw(20) << -initialInvestment << setw(25) << fixed << setprecision(2) << discountRate[0] << setw(35) << -initialInvestment << endl;
-        cout << setfill('-') << setw(90) << "-" << setfill(' ') << endl;
-        for (int year = 1; year <= projectDuration; ++year)
-        {
-            double dcf = annualBenefits[year - 1] * discountRate[year - 1];
-            npv += dcf;
-            cout << setw(10) << year << setw(20) << annualBenefits[year - 1] << setw(25) << fixed << setprecision(2) << discountRate[year - 1]
-                 << setw(35) << dcf << endl;
-        }
-        return npv;
+        float rateFactor = pow(1 + (float(discountRate[i]) / 100.0), (i));
+        float rate = 1.0 / (rateFactor);
+        cout << "Rate Factor: " << rateFactor << "\t";
+        cout << "Rate: " << rate << "\t";
+
+        npv += (benefits[i] - costs[i]) * rate;
+        cout << "NPV: " << npv << endl;
     }
-};
+    return npv;
+}
 
 int main()
 {
-    project g;
+    cout << "Enter Years\n";
+    int years;
+    cin >> years;
 
-    cout << "Cost-Benefit Analysis" << endl;
-    cout << "---------------------" << endl;
+    years++;
 
-    double initialInvestment;
-
-    int projectDuration;
-
-    cout << "Enter inital investment: ";
-    cin >> initialInvestment;
-
-    cout << "Enter project duration (in years): ";
-    cin >> projectDuration;
-
-    cout << "Enter annual benefits: $";
-    double annualBenefits[projectDuration];
-    for (int i = 0; i < projectDuration; i++)
+    cout << "Enter cost for " << years << " years\n";
+    int costs[years + 1];
+    for (int i = 0; i < years; i++)
     {
-        cin >> annualBenefits[i];
+        cin >> costs[i];
     }
 
-    cout << "Assuming a discount rate of 10%: " << endl;
-    double discountRate[] = {0.9091, 0.8264, 0.7513, 0.6830, 0.6209, 0.5645, 0.5132, 0.4605, 0.4241, 0.3855, 0.2394, 0.1486, 0.0923};
-
-    double npv = g.calculateNPV(initialInvestment, annualBenefits, projectDuration, discountRate);
-
-    cout << "\nResults" << endl;
-    cout << "-------" << endl;
-    cout << "Net Present Value (NPV): $" << npv << endl;
-
-    if (npv > 0)
+    cout << "Enter benefits for " << years << " years\n";
+    int benefits[years + 1];
+    for (int i = 0; i < years; i++)
     {
-        cout << "The project is beneficial." << endl;
+        cin >> benefits[i];
     }
-    else if (npv < 0)
+    cout << "Enter discount rates " << years << " years\n";
+    int discountRate[years + 1];
+    for (int i = 0; i < years; i++)
     {
-        cout << "The project is not beneficial." << endl;
+        cin >> discountRate[i];
     }
-    else
-    {
-        cout << "The project is neutral." << endl;
-    }
+
+    float npv = NPVCalculator(years, costs, benefits, discountRate);
+
+    cout << "Net Profit Value = " << npv << endl;
+
+    return 0;
 }
