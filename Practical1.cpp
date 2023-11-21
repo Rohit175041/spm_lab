@@ -23,9 +23,6 @@ int main()
     cout << "Enter Years\n";
     int years;
     cin >> years;
-
-    years++;
-
     cout << "Enter cost for " << years << " years\n";
     int costs[years + 1];
     for (int i = 0; i < years; i++)
@@ -35,13 +32,13 @@ int main()
 
     cout << "Enter benefits for " << years << " years\n";
     int benefits[years + 1];
-    for (int i = 0; i < years; i++)
+    for (int i = 0; i <= years; i++)
     {
         cin >> benefits[i];
     }
     cout << "Enter discount rates " << years << " years\n";
     int discountRate[years + 1];
-    for (int i = 0; i < years; i++)
+    for (int i = 0; i <= years; i++)
     {
         cin >> discountRate[i];
     }
@@ -52,3 +49,6 @@ int main()
 
     return 0;
 }
+
+
+
